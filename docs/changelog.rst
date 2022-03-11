@@ -24,6 +24,7 @@ CHANGELOG
 
 - Delete filenames in captions of attachments when importing from Apidae (#2698)
 - Add copyright when importing from Apidae on attachments (#2698)
+- Add length 2d for land's app for exports and lists
 
 **Maintenance**
 
