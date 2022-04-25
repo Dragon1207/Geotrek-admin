@@ -411,7 +411,7 @@ MAPENTITY_CONFIG = {
         }
     },
     'REGEX_PATH_ATTACHMENTS': r'\.\d+x\d+_q\d+(_crop)?(_watermark-\w+)?\.(jpg|png|jpeg)$',
-    'MAX_CHARACTERS': 0,
+    'MAX_CHARACTERS': None,
 }
 
 MAP_STYLES = {}  # backward compatibility. Don't use this settings anymore, use MAPENTITY_CONFIG['MAP_STYLES']
