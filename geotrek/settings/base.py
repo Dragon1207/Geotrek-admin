@@ -643,7 +643,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'convert_urls': False,
     "toolbar": "bold italic forecolor | bullist numlist link media | "
                "undo redo | "
-               "removeformat | code",
+               "removeformat | code | wordcount | help",
     "paste_as_text": True
 }
 
