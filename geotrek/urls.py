@@ -8,6 +8,7 @@ from django.contrib.auth import views as auth_views
 from mapentity.forms import AttachmentForm
 from mapentity.urls import _MEDIA_URL
 
+from geotrek.authent import views as authent_views
 from geotrek.common import views as common_views
 from geotrek.common.views import add_attachment_accessibility, update_attachment_accessibility, \
     delete_attachment_accessibility, ServeAttachmentAccessibility
@@ -21,6 +22,7 @@ urlpatterns = [
 
 if settings.DEBUG or settings.MAPENTITY_CONFIG['SENDFILE_HTTP_HEADER']:
     urlpatterns += [
+        re_path(r'^%s/(?P<path>paperclip/.*)$' % _MEDIA_URL, authent_views.ServeAttachment.as_view()),
         re_path(r'^%s/(?P<path>attachments_accessibility/.*)$' % _MEDIA_URL, ServeAttachmentAccessibility.as_view()),
     ]
 

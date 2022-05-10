@@ -2,6 +2,7 @@
     Unit tests
 """
 from .base import AuthentFixturesTest
+from django.conf import settings
 from django.urls import reverse
 
 from geotrek.authent.tests.factories import StructureFactory, PathManagerFactory
@@ -34,14 +35,18 @@ class StructureTest(AuthentFixturesTest):
 
     def test_structure_restricted_attachment(self):
         """Attachment should not be modified"""
-        p = PathFactory()
-        picture = AttachmentFactory(content_object=p, title='img1',
+        obj = PathFactory()
+        picture = AttachmentFactory(content_object=obj, title='img1',
                                     attachment_file=get_dummy_uploaded_image())
         # Login
         user = PathManagerFactory(password="foo")
         self.client.login(username=user.username, password="foo")
 
-        # Add an attachment to path from same structure
+        # Display attachment standalone
+        response = self.client.get(picture.attachment_file.url)
+        self.assertEqual(response.status_code, 200)
+
+        # Update attachment from same structure
         update_attachment_url = reverse(
             'update_attachment',
             kwargs={'attachment_pk': picture.pk}
@@ -49,10 +54,14 @@ class StructureTest(AuthentFixturesTest):
         response = self.client.get(update_attachment_url)
         self.assertEqual(response.status_code, 200)
 
-        # Add attachment or remove existing one from other structure
-        p.structure = StructureFactory(name="Other")
-        p.save()
-        self.assertNotEqual(p.structure, user.profile.structure)
+        # Add attachment, update or remove existing one from other structure
+        obj.structure = StructureFactory(name="Other")
+        obj.save()
+        self.assertNotEqual(obj.structure, user.profile.structure)
+
+        # Display attachment standalone
+        response = self.client.get(picture.attachment_file.url)
+        self.assertEqual(response.status_code, 302)
 
         response = self.client.get(update_attachment_url)
         self.assertEqual(response.status_code, 302)
