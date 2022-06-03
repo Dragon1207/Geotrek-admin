@@ -391,6 +391,8 @@ class Topology(ZoningPropertiesMixin, AddPropertyMixin, AltimetryMixin,
     """ Fake srid attribute, that prevents transform() calls when using Django map widgets. """
     srid = settings.API_SRID
 
+    geometry_types_allowed = ["LINESTRING", "POINT"]
+
     class Meta:
         verbose_name = _("Topology")
         verbose_name_plural = _("Topologies")
@@ -949,6 +951,8 @@ class Trail(MapEntityMixin, Topology, StructureRelated):
     arrival = models.CharField(verbose_name=_("Arrival"), blank=True, max_length=64)
     comments = models.TextField(default="", blank=True, verbose_name=_("Comments"))
     eid = models.CharField(verbose_name=_("External id"), max_length=1024, blank=True, null=True)
+
+    geometry_types_allowed = ["LINESTRING"]
 
     class Meta:
         verbose_name = _("Trail")
