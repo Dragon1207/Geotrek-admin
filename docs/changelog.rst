@@ -9,6 +9,26 @@ CHANGELOG
 
 - Add filter valid geometries on topologies (#2515)[3.1]
 
+**Breaking Changes**
+
+- This release require PostGIS 2.5 or later.
+  - Ubuntu bionic 18.04 users, take care, PostGIS default is 2.4. You need to upgrade your PostGIS version.
+
+**Warning**
+
+- You need to delete cache after this release upgrade.
+  - rm -r var/cache/*
+  - sudo dpkg-reconfigure geotrek-admin / docker-compose restart
+
+**Improvments**
+
+- New GeoJSON generation system, using Djang Rest Framework and PostGIS functions
+- Enable GZIP compression on JSON / GeoJSON on nginx
+
+**Maintenance**
+
+- upgrade mapentity to 8.1.0
+
 
 2.83.0  (2022-05-01)
 -----------------------
